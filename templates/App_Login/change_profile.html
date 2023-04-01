@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block title %} 
+  Update Profile 
+{% endblock %} 
+
+{% block body_block %}
+<div class="w-100 d-flex flex-column justify-content-center align-items-center">
+    <h1> My Profile</h1>
+    <form method="post" class="w-25  d-flex flex-column justify-content-center align-items-center">
+        <div class="w-100">
+            {{ form|crispy }}
+            {% csrf_token %}
+        </div>
+        <button type="submit" class="btn btn-primary btn-sm mt-4">Update</button>
+    </form>
+</div>
+{% endblock %}

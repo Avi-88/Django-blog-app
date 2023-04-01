@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block title %} 
+  BLOG Details
+{% endblock %} 
+
+{% block body_block %}
+<div class="w-75 mx-auto d-flex flex-column justify-content-center align-items-center">
+  <div class="w-100">
+    <h1 class="mt-4">{{ blog.blog_title }}</h1>
+    <h5>Published By : {{ blog.author }}</h5>
+    <i><h7>Published On: {{ blog.publish_date }}</h7></i>
+    <i><h7>| Updated  On: {{ blog.update_date }}</h7></i>
+    
+    <div class="d-flex justify-content-start align-items-center">
+      <div class="d-flex justify-content-center align-items-center p-2">
+      {% if not liked %}
+      <div class="d-flex justify-content-center align-items-center px-2">
+        <a class="d-flex justify-content-center align-items-center" href="{% url 'App_Blog:liked_post' pk=blog.pk %}"><svg style="color: red;" xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
+          <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
+        </svg></a>
+      </div>
+      {% else %}
+      <div class="d-flex justify-content-center align-items-center px-2">
+        <a class="d-flex justify-content-center align-items-center" href="{% url 'App_Blog:unliked_post' pk=blog.pk %}"><svg style="color: red;" xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
+          <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+        </svg></a>
+      </div>
+      {% endif %}
+        <div class="pt-2">
+          <p>{{ blog.liked_blog.count }} Likes</p>
+        </div>
+      </div>
+      <div class="pt-2">
+        <p>| {{ blog.blog_comment.count }} Comments</p>
+      </div>
+    </div>
+  </div>
+  <div class="d-flex justify-content-center align-items-center py-4">
+    <img width="100%" style="object-fit: cover;" src="/media/{{blog.blog_image}}" alt="{{ blog.blog_title }}" >
+  </div>
+  <div>
+    <p>{{ blog.blog_content|linebreaks }}</p>
+  </div>
+  <div class="row w-100 mt-4 py-4">
+    <div class="col-6 d-flex flex-column justify-content-start align-items-start  ">
+      <h5>Comments:</h5>
+      {% for comment in blog.blog_comment.all %}
+      <div class="mt-4 d-flex justify-content-start align-items-start">
+        <h5><a href="">{{ comment.user }}</a></h5>
+        <div class="px-4">
+          <h6>{{ comment.comment }}</h6>
+          <i><p>{{ comment.comment_date }}</p></i>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="col-6 d-flex justify-content-between align-items-start ">
+      <form method="post" class="d-flex flex-column w-100 justify-content-start align-items-center">
+        <div class="w-100">
+          {{ comment_form|crispy }}
+          {% csrf_token %}
+        </div>
+        <button type="submit" class="btn btn-primary btn-sm mt-4">Add Comment</button>
+      </form>
+    </div>
+  </div>
+  <br><br><br>
+</div>
+{% endblock %}

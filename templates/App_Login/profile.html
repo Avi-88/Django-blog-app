@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block title %} 
+  Sign Up 
+{% endblock %} 
+
+{% block body_block %}
+<div class="container my-auto">
+  <div class="row">
+    <div class="col-12 col-lg-6 order-2  p-4 d-flex flex-column justify-content-center align-items-center">
+      <p style="font-size: large;">Username : {{user.username}}</p>
+      <p style="font-size: large;">Email : {{user.email}}</p>
+      <p style="font-size: large;">Name : {{user.first_name}} {{user.last_name}}</p>
+      
+      <br>
+      <a href="{% url 'App_Login:user_change' %}" class="btn btn-md btn-warning">
+          Update Profile
+      </a>
+    </div>
+    <div class="col-12 col-lg-6 order-1  p-4 d-flex flex-column justify-content-center align-items-center">
+      {% if user.user_profile %}
+      <div class="h-100 w-100 d-flex justify-content-center align-items-center">
+        <img class="rounded-circle" style="height: 200px; width: 200px;object-fit: cover;" src="/media/{{user.user_profile.profile_pic}}" alt="profile_pic" >
+      </div>
+      <a href="{% url 'App_Login:change_pro_pic' %}" class="btn btn-sm btn-info mt-4">
+        Edit Profile pic
+      </a>
+      {% else %}
+      <div class="h-100 w-100 d-flex justify-content-center align-items-center">
+        <img class="rounded-circle" style="height: 200px; width: 200px;object-fit: cover;" src="/media/default.jpg" alt="profile_pic" >
+      </div>
+      <a href="{% url 'App_Login:add_pro_pic' %}" class="btn btn-sm btn-info mt-4">
+        Add Profile pic
+      </a>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+{% endblock %}

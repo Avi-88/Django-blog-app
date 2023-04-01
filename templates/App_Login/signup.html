@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block title %} 
+  Sign Up 
+{% endblock %} 
+
+{% block body_block %}
+{% if registered  %}
+<div class="alert my-auto mx-auto alert-success w-50 h-50 p-4 d-flex flex-column justify-content-center align-items-center">
+    <p class="text-center">Account successfully created</p> 
+    <a href="{% url 'App_Login:signin' %}">
+        <button class="btn btn-primary">
+            Login
+        </button>
+    </a>
+</div>
+{% else %}
+<div class="w-100 my-auto  d-flex flex-column justify-content-center align-items-center">
+<h1> SignUp</h1>
+<form method="post" class="d-flex flex-column justify-content-center align-items-center">
+    <div>
+        {{ form|crispy }}
+        {% csrf_token %}
+    </div>
+    <button type="submit" class="btn btn-success btn-sm mt-4">Create Account</button>
+</form>
+<br>
+<p>Already have an account ? <a href="{% url 'App_Login:signin' %}">Login</a></p>
+</div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load custom_filters %}
+{% block title %} 
+ My Blogs
+{% endblock %} 
+
+{% block body_block %}
+{% for blog in user.post_author.all %}
+<div class="row py-4 mt-2">
+    <div class="col-8 ">
+      <h2>{{ blog.blog_title }}</h2>
+      <h6>{{ blog.publish_date }}</h6>
+      <p>
+        {{ blog.blog_content|range_filter|linebreaks }}
+        <a href="{% url 'App_Blog:blog_details'  %}">Read more</a>
+      </p>
+    </div>
+    <div class="col-4 d-flex justify-content-end align-items-center ">
+      <img  style="height: 240px; width: 240px;object-fit: cover;" src="/media/{{blog.blog_image}}" alt="{{ blog.blog_title }}" >
+    </div>   
+  </div>
+
+
+{% endfor %}
+{% endblock %}
